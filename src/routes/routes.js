@@ -1,24 +1,51 @@
 const express = require("express");
 const router = express.Router();
-router.use(express.json()); 
+router.use(express.json());
+
 const UsuarioController = require("../controllers/usuariosController");
-const usuariosController = UsuarioController();
+const ImovelController = require("../controllers/imovelController");
+const EstadoController = require("../controllers/estadoController");
+const CidadeController = require("../controllers/cidadeController");
+const TipoController = require("../controllers/tipoController"); 
 const authMiddleware = require("../middleware/auth");
-const upload = require("../utils/multer")
+const upload = require("../utils/multer");
 
-// Rota para visualizar usuários
+const usuariosController = UsuarioController();
+const imovelController = ImovelController();
+const estadoController = EstadoController();
+const cidadeController = CidadeController();  
+const tipoController = TipoController(); 
+
 router.get('/usuarios', usuariosController.visualizarUsuario);
-
-// Rota para cadastrar usuário (agora usando JSON com base64)
-router.post('/usuarios', upload, usuariosController.cadastrar);
-
-// Rota de login
+router.post('/usuarios', usuariosController.cadastrar);
 router.post('/usuarios/login', usuariosController.logar);
 
-// Rota com middleware de autenticação
+router.get('/imovel', imovelController.getImovel);
+router.get('/imovel/:id', imovelController.getImovelById);
+router.post('/imovel', upload, imovelController.postImovel);
+router.put('/imovel/:id', upload, imovelController.putImovel); 
+router.delete('/imovel/:id', imovelController.deleteImovel); 
+
+router.get('/estados', estadoController.getEstados);
+router.get('/estados/:id', estadoController.getEstadoById); 
+router.post('/estados', estadoController.postEstado);
+router.put('/estados/:id', estadoController.putEstado); 
+router.delete('/estados/:id', estadoController.deleteEstado);
+
+router.get('/cidades', cidadeController.getCidades);  
+router.get('/cidades/:id', cidadeController.getCidadeById); 
+router.post('/cidades', cidadeController.postCidade); 
+router.put('/cidades/:id', cidadeController.putCidade);  
+router.delete('/cidades/:id', cidadeController.deleteCidade);  
+
+router.get('/tipos', tipoController.getTipos);  
+router.get('/tipos/:id', tipoController.getTipoById); 
+router.post('/tipos', tipoController.postTipo); 
+router.put('/tipos/:id', tipoController.putTipo);  
+router.delete('/tipos/:id', tipoController.deleteTipo);  
+
 router.use(authMiddleware);
 
-// Rota de erro para rotas não encontradas
 router.use('*', (req, res) => {
   res.status(404).json({ errorMessage: 'Rota não encontrada' });
 });

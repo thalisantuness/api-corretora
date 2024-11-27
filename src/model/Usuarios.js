@@ -16,10 +16,6 @@ const Usuario = sequelize.define('Usuario', {
     allowNull: false,
     unique: true,
   },
-  imageData: {
-    type: DataTypes.BLOB('long'),
-    allowNull: false,
-  },
   senha: {
     type: Sequelize.STRING,
     allowNull: false,

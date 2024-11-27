@@ -23,7 +23,6 @@ async function criarUsuario(dadosUsuario) {
     nome,
     email,
     senha: senhaHash,
-    imageData, // Agora a imagem é passada diretamente no formato Buffer
     pontos: 0
   });
 

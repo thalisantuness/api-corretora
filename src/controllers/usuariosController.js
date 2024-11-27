@@ -1,5 +1,5 @@
 const { Usuario } = require('../model/Usuarios');
-const repoUsuarios = require('../repositories/repoUsuarios');
+const usuariosRepository = require('../repositories/usuariosRepository');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth.json');
@@ -9,7 +9,7 @@ function UsuarioController() {
 
   async function visualizarUsuario(req, res) {
     try {
-      const usuarios = await repoUsuarios.listarUsuarios();
+      const usuarios = await usuariosRepository.listarUsuarios();
 
       if (usuarios.length === 0) {
         return res.status(404).json({ error: 'Nenhum usuário encontrado' });
@@ -33,30 +33,21 @@ function UsuarioController() {
     }
   }
 
-  async function compressImage(buffer) {
-    return sharp(buffer)
-      .resize(500, 500) // Redimensiona a imagem (por exemplo, para 500x500)
-      .jpeg({ quality: 80 }) // Converte para JPG com qualidade 80%
-      .toBuffer(); // Retorna o buffer compactado
-  }
+
 
   async function cadastrar(req, res) {
     try {
       const { nome, email, senha } = req.body;
-      const imagemBase64 = req.file ? req.file.buffer : null; 
   
-      if (!nome || !email || !senha || !imagemBase64) {
-        return res.status(400).json({ error: 'Nome, email, senha e imagem são obrigatórios.' });
+  
+      if (!nome || !email || !senha ) {
+        return res.status(400).json({ error: 'Nome, email, senha são obrigatórios.' });
       }
   
-      const imagemComprimida = await compressImage(imagemBase64);
-      const imageData = imagemComprimida;
-  
-      const usuario = await repoUsuarios.criarUsuario({
+      const usuario = await usuariosRepository.criarUsuario({
         nome, 
         email, 
         senha: await bcrypt.hash(senha, 10), 
-        imageData  // Agora armazena a imagem comprimida
       });
   
       res.json({ message: `Usuário ${nome} cadastrado com sucesso!` });

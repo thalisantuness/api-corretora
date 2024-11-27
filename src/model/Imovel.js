@@ -44,7 +44,7 @@ const Imovel = sequelize.define('Imovel', {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'Tipo', 
+      model: 'tipo', 
       key: 'tipo_id',
     },
   },
@@ -52,7 +52,7 @@ const Imovel = sequelize.define('Imovel', {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'Cidade', 
+      model: 'cidade', 
       key: 'cidade_id',
     },
   },
@@ -60,7 +60,7 @@ const Imovel = sequelize.define('Imovel', {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'Estado', 
+      model: 'estado', 
       key: 'estado_id',
     },
   },
