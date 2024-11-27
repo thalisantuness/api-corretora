@@ -17,28 +17,23 @@ const Imovel = sequelize.define('Imovel', {
   },
   valor: {
     type: Sequelize.FLOAT,
-    allowNull: false,
-    unique: true,
+    allowNull: false,  
   },
   valor_condominio: {
     type: Sequelize.FLOAT,
     allowNull: false,
-    unique: true,
   },
   n_quartos: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    unique: true,
   },
   n_banheiros: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    unique: true,
   },
   n_vagas: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    unique: true,
   },
   tipo_id: { 
     type: Sequelize.INTEGER,
@@ -72,8 +67,8 @@ const Imovel = sequelize.define('Imovel', {
     type: Sequelize.DATE,
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
   },
-  imageData: {
-    type: DataTypes.BLOB('long'),
+  imageData: { 
+    type: Sequelize.STRING,
     allowNull: false,
   },
 }, {

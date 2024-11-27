@@ -5,18 +5,18 @@ async function listarImovel() {
 }
 
 async function criarImovel(dadosImovel) {
-  const { 
-    nome, 
-    description, 
-    valor, 
-    valor_condominio, 
-    n_quartos, 
-    n_banheiros, 
-    n_vagas, 
-    tipo_id, 
-    cidade_id, 
-    estado_id, 
-    imageData 
+  const {
+    nome,
+    description,
+    valor,
+    valor_condominio,
+    n_quartos,
+    n_banheiros,
+    n_vagas,
+    tipo_id,
+    cidade_id,
+    estado_id,
+    imageData,
   } = dadosImovel;
 
   const imovel = await Imovel.create({
@@ -30,7 +30,7 @@ async function criarImovel(dadosImovel) {
     tipo_id,
     cidade_id,
     estado_id,
-    imageData,
+    imageData, 
   });
 
   return imovel;
