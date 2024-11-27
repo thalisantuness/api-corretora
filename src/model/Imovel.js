@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../utils/db');
 const { Estado } = require('./Estado')
 const { Tipo } = require('./Tipo')
-// const { Photo } = require('./Photo')
+const { Photo } = require('./Photo')
 
 const Imovel = sequelize.define('Imovel', {
   imovel_id: {
@@ -82,9 +82,9 @@ Imovel.belongsTo(Tipo, {
   as: 'tipo', 
 });
 
-// Imovel.hasMany(Photo, {
-//   foreignKey: 'imovel_id',
-//   as: 'photo',
-// });
+Imovel.hasMany(Photo, {
+  foreignKey: 'imovel_id',
+  as: 'photo',
+});
 
 module.exports = { Imovel };
