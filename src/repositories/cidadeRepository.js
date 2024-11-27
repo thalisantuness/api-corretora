@@ -1,7 +1,14 @@
 const { Cidade } = require('../model/Cidade');
+const {Estado} = require('../model/Estado');
 
 async function listarCidades() {
-  return await Cidade.findAll();
+  return await Cidade.findAll(
+    {
+      include: [
+        { model: Estado, as: 'estado', attributes: ['estado_id','nome'] },
+      ]
+    }
+  );
 }
 
 async function buscarCidadePorId(id) {

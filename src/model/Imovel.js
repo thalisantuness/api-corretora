@@ -1,5 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../utils/db');
+const { Estado } = require('./Estado')
+const { Tipo } = require('./Tipo')
 
 const Imovel = sequelize.define('Imovel', {
   imovel_id: {
@@ -35,30 +37,22 @@ const Imovel = sequelize.define('Imovel', {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  tipo_id: { 
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'tipo', 
-      key: 'tipo_id',
-    },
-  },
-  cidade_id: { 
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'cidade', 
-      key: 'cidade_id',
-    },
-  },
-  estado_id: { 
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'estado', 
-      key: 'estado_id',
-    },
-  },
+  // tipo_id: { 
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  //   references: {
+  //     model: Tipo, 
+  //     key: 'tipo_id',
+  //   },
+  // },
+  // estado_id: { 
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  //   references: {
+  //     model: Estado, 
+  //     key: 'estado_id',
+  //   },
+  // },
   data_cadastro: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -76,5 +70,15 @@ const Imovel = sequelize.define('Imovel', {
   tableName: 'imovel',
   timestamps: false,
 });
+
+// Imovel.belongsTo(Estado, {
+//   foreignKey: 'estado_id',
+//   as: 'estado', 
+// });
+
+// Imovel.belongsTo(Tipo, {
+//   foreignKey: 'tipo_id',
+//   as: 'tipo', 
+// });
 
 module.exports = { Imovel };

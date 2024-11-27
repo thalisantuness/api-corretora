@@ -7,6 +7,7 @@ const ImovelController = require("../controllers/imovelController");
 const EstadoController = require("../controllers/estadoController");
 const CidadeController = require("../controllers/cidadeController");
 const TipoController = require("../controllers/tipoController"); 
+const PhotoController = require("../controllers/photoController");
 const authMiddleware = require("../middleware/auth");
 const upload = require("../utils/multer");
 
@@ -15,6 +16,7 @@ const imovelController = ImovelController();
 const estadoController = EstadoController();
 const cidadeController = CidadeController();  
 const tipoController = TipoController(); 
+const photoController = PhotoController();
 
 router.get('/usuarios', usuariosController.visualizarUsuario);
 router.post('/usuarios', usuariosController.cadastrar);
@@ -43,6 +45,9 @@ router.get('/tipos/:id', tipoController.getTipoById);
 router.post('/tipos', tipoController.postTipo); 
 router.put('/tipos/:id', tipoController.putTipo);  
 router.delete('/tipos/:id', tipoController.deleteTipo);  
+
+router.get('/photo', photoController.getPhoto);  
+router.post('/photo', photoController.postPhoto); 
 
 router.use(authMiddleware);
 

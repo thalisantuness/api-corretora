@@ -1,7 +1,18 @@
 const { Imovel } = require('../model/Imovel');
+const {Estado} = require('../model/Estado');
+const {Tipo} = require('../model/Tipo');
+const {Photo} = require('../model/Photo');
 
 async function listarImovel() {
-  return await Imovel.findAll();
+  return await Imovel.findAll(
+    {
+      include: [
+        { model: Estado, as: 'estado', attributes: ['estado_id','nome'] },
+        { model: Tipo, as: 'tipo', attributes: ['tipo_id','nome'] },
+        { model: Photo, as: 'photos', attributes: ['photo_id','imageData']}
+      ]
+    }
+  );
 }
 
 async function criarImovel(dadosImovel) {
