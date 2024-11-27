@@ -35,13 +35,17 @@ function CidadeController() {
 
   async function postCidade(req, res) {
     try {
-      const { nome } = req.body;
-
+      const { nome, estado_id } = req.body;  
+  
       if (!nome) {
         return res.status(400).json({ error: 'O nome da cidade é obrigatório.' });
       }
-
-      const novaCidade = await cidadeRepository.criarCidade({ nome });
+  
+      if (!estado_id) {  
+        return res.status(400).json({ error: 'O estado_id é obrigatório.' });
+      }
+  
+      const novaCidade = await cidadeRepository.criarCidade({ nome, estado_id });  
       res.status(201).json(novaCidade);
     } catch (error) {
       console.error('Erro ao criar cidade:', error);

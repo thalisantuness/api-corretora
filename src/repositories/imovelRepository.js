@@ -9,7 +9,7 @@ async function listarImovel() {
       include: [
         { model: Estado, as: 'estado', attributes: ['estado_id','nome'] },
         { model: Tipo, as: 'tipo', attributes: ['tipo_id','nome'] },
-        { model: Photo, as: 'photos', attributes: ['photo_id','imageData']}
+        { model: Photo, as: 'photo', attributes: ['photo_id','imageData']}
       ]
     }
   );

@@ -16,9 +16,13 @@ async function buscarCidadePorId(id) {
 }
 
 async function criarCidade(dadosCidade) {
-  const { nome } = dadosCidade;
+  const { nome, estado_id } = dadosCidade;
 
-  const cidade = await Cidade.create({ nome });
+  if (!estado_id) {
+    throw new Error('O estado_id é obrigatório');
+  }
+
+  const cidade = await Cidade.create({ nome, estado_id });
   return cidade;
 }
 
