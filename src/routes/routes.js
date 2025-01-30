@@ -23,6 +23,7 @@ router.post('/usuarios', usuariosController.cadastrar);
 router.post('/usuarios/login', usuariosController.logar);
 
 router.get('/imovel', imovelController.getImovel);
+router.get("/imovel/estado/:estado_id", imovelController.getImovelPorEstado);
 router.get('/imovel/:id', imovelController.getImovelById);
 router.post('/imovel', upload, imovelController.postImovel);
 router.put('/imovel/:id', upload, imovelController.putImovel); 

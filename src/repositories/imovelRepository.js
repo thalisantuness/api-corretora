@@ -79,10 +79,22 @@ async function deletarImovel(id) {
   return { message: 'Imóvel deletado com sucesso' };
 }
 
+async function listarImovelPorEstado(estado_id) {
+  return await Imovel.findAll({
+    where: { estado_id },
+    include: [
+      { model: Estado, as: 'estado', attributes: ['estado_id', 'nome'] },
+      { model: Tipo, as: 'tipo', attributes: ['tipo_id', 'nome'] },
+      { model: Photo, as: 'photo', attributes: ['photo_id', 'imageData'] }
+    ],
+  });
+}
+
 module.exports = {
   listarImovel,
   criarImovel,
   buscarImovelPorId,
   atualizarImovel,
   deletarImovel,
+  listarImovelPorEstado
 };
