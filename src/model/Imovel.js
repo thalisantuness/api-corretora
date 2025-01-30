@@ -3,6 +3,7 @@ const sequelize = require('../utils/db');
 const { Estado } = require('./Estado')
 const { Tipo } = require('./Tipo')
 const { Photo } = require('./Photo')
+const { Cidade } = require('./Cidade');
 
 const Imovel = sequelize.define('Imovel', {
   imovel_id: {
@@ -54,6 +55,16 @@ const Imovel = sequelize.define('Imovel', {
       key: 'estado_id',
     },
   },
+
+  cidade_id: { 
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: Cidade, 
+      key: 'cidade_id',
+    },
+  },
+
   data_cadastro: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -85,6 +96,11 @@ Imovel.belongsTo(Tipo, {
 Imovel.hasMany(Photo, {
   foreignKey: 'imovel_id',
   as: 'photo',
+});
+
+Imovel.belongsTo(Cidade, { 
+  foreignKey: 'cidade_id',
+  as: 'cidade',
 });
 
 module.exports = { Imovel };
