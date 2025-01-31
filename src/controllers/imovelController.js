@@ -5,20 +5,33 @@ const { v4: uuidv4 } = require('uuid');
 
 function ImovelController() {
   
-    async function getImovel(req, res) {
-      try {
-        const imoveis = await imovelRepository.listarImovel();
+  async function getImovel(req, res) {
+    try {
+      const { tipo_id, cidade_id, n_quartos, n_banheiros, n_vagas, estado_id } = req.query;
+  
     
-        if (imoveis.length === 0) {
-          return res.status(404).json({ error: 'Nenhum imóvel encontrado' });
-        }
-    
-        res.json(imoveis);
-      } catch (error) {
-        console.error('Erro ao obter imóveis:', error);
-        res.status(500).json({ error: 'Erro ao obter imóveis' });
+      const filtros = {};
+  
+      if (tipo_id) filtros.tipo_id = tipo_id;
+      if (cidade_id) filtros.cidade_id = cidade_id;
+      if (n_quartos) filtros.n_quartos = n_quartos;
+      if (n_banheiros) filtros.n_banheiros = n_banheiros;
+      if (n_vagas) filtros.n_vagas = n_vagas;
+      if (estado_id) filtros.estado_id = estado_id;
+  
+      const imoveis = await imovelRepository.listarImovel(filtros);
+  
+      if (imoveis.length === 0) {
+        return res.status(404).json({ error: 'Nenhum imóvel encontrado com os filtros fornecidos' });
       }
+  
+      res.json(imoveis);
+    } catch (error) {
+      console.error('Erro ao obter imóveis:', error);
+      res.status(500).json({ error: 'Erro ao obter imóveis' });
     }
+  }
+  
 
 
   async function compressImage(buffer) {
@@ -164,6 +177,22 @@ function ImovelController() {
       res.status(500).json({ error: 'Erro ao buscar imóveis por estado' });
     }
   }
+
+  async function getImoveisPorCidade(req, res) {
+    try {
+      const { cidade_id } = req.params;
+      const imoveis = await imovelRepository.listarImoveisPorCidade(cidade_id);
+  
+      if (imoveis.length === 0) {
+        return res.status(404).json({ error: 'Nenhum imóvel encontrado nesta cidade' });
+      }
+  
+      res.json(imoveis);
+    } catch (error) {
+      console.error('Erro ao buscar imóveis por cidade:', error);
+      res.status(500).json({ error: 'Erro ao buscar imóveis' });
+    }
+  }
   
   return {
     getImovel,
@@ -171,7 +200,8 @@ function ImovelController() {
     getImovelById,
     putImovel,
     deleteImovel,
-    getImovelPorEstado
+    getImovelPorEstado,
+    getImoveisPorCidade
   };
 }
 

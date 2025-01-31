@@ -3,16 +3,15 @@ const {Estado} = require('../model/Estado');
 const {Tipo} = require('../model/Tipo');
 const {Photo} = require('../model/Photo');
 
-async function listarImovel() {
-  return await Imovel.findAll(
-    {
-      include: [
-        { model: Estado, as: 'estado', attributes: ['estado_id','nome'] },
-        { model: Tipo, as: 'tipo', attributes: ['tipo_id','nome'] },
-        { model: Photo, as: 'photo', attributes: ['photo_id','imageData']}
-      ]
-    }
-  );
+async function listarImovel(filtros = {}) {
+  return await Imovel.findAll({
+    where: filtros,
+    include: [
+      { model: Estado, as: 'estado', attributes: ['estado_id', 'nome'] },
+      { model: Tipo, as: 'tipo', attributes: ['tipo_id', 'nome'] },
+      { model: Photo, as: 'photo', attributes: ['photo_id', 'imageData'] }
+    ],
+  });
 }
 
 async function criarImovel(dadosImovel) {
@@ -90,11 +89,24 @@ async function listarImovelPorEstado(estado_id) {
   });
 }
 
+async function listarImoveisPorCidade(cidade_id) {
+  return await Imovel.findAll({
+    where: { cidade_id },
+    include: [
+      { model: Estado, as: 'estado', attributes: ['estado_id', 'nome'] },
+      { model: Tipo, as: 'tipo', attributes: ['tipo_id', 'nome'] },
+      { model: Photo, as: 'photo', attributes: ['photo_id', 'imageData'] }
+    ]
+  });
+}
+
+
 module.exports = {
   listarImovel,
   criarImovel,
   buscarImovelPorId,
   atualizarImovel,
   deletarImovel,
-  listarImovelPorEstado
+  listarImovelPorEstado,
+  listarImoveisPorCidade,
 };
