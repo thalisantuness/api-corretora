@@ -2,12 +2,14 @@ const { Imovel } = require('../model/Imovel');
 const {Estado} = require('../model/Estado');
 const {Tipo} = require('../model/Tipo');
 const {Photo} = require('../model/Photo');
+const {Cidade} = require('../model/Cidade');
 
 async function listarImovel(filtros = {}) {
   return await Imovel.findAll({
     where: filtros,
     include: [
       { model: Estado, as: 'estado', attributes: ['estado_id', 'nome'] },
+      { model: Cidade, as: 'cidade', attributes: ['cidade_id', 'nome'] },
       { model: Tipo, as: 'tipo', attributes: ['tipo_id', 'nome'] },
       { model: Photo, as: 'photo', attributes: ['photo_id', 'imageData'] }
     ],
@@ -78,35 +80,10 @@ async function deletarImovel(id) {
   return { message: 'Imóvel deletado com sucesso' };
 }
 
-async function listarImovelPorEstado(estado_id) {
-  return await Imovel.findAll({
-    where: { estado_id },
-    include: [
-      { model: Estado, as: 'estado', attributes: ['estado_id', 'nome'] },
-      { model: Tipo, as: 'tipo', attributes: ['tipo_id', 'nome'] },
-      { model: Photo, as: 'photo', attributes: ['photo_id', 'imageData'] }
-    ],
-  });
-}
-
-async function listarImoveisPorCidade(cidade_id) {
-  return await Imovel.findAll({
-    where: { cidade_id },
-    include: [
-      { model: Estado, as: 'estado', attributes: ['estado_id', 'nome'] },
-      { model: Tipo, as: 'tipo', attributes: ['tipo_id', 'nome'] },
-      { model: Photo, as: 'photo', attributes: ['photo_id', 'imageData'] }
-    ]
-  });
-}
-
-
 module.exports = {
   listarImovel,
   criarImovel,
   buscarImovelPorId,
   atualizarImovel,
-  deletarImovel,
-  listarImovelPorEstado,
-  listarImoveisPorCidade,
+  deletarImovel
 };

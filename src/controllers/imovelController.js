@@ -162,46 +162,14 @@ function ImovelController() {
     }
   }
 
-  async function getImovelPorEstado(req, res) {
-    try {
-      const { estado_id } = req.params;
-      const imoveis = await imovelRepository.listarImovelPorEstado(estado_id);
-  
-      if (imoveis.length === 0) {
-        return res.status(404).json({ error: 'Nenhum imóvel encontrado para este estado' });
-      }
-  
-      res.json(imoveis);
-    } catch (error) {
-      console.error('Erro ao buscar imóveis por estado:', error);
-      res.status(500).json({ error: 'Erro ao buscar imóveis por estado' });
-    }
-  }
-
-  async function getImoveisPorCidade(req, res) {
-    try {
-      const { cidade_id } = req.params;
-      const imoveis = await imovelRepository.listarImoveisPorCidade(cidade_id);
-  
-      if (imoveis.length === 0) {
-        return res.status(404).json({ error: 'Nenhum imóvel encontrado nesta cidade' });
-      }
-  
-      res.json(imoveis);
-    } catch (error) {
-      console.error('Erro ao buscar imóveis por cidade:', error);
-      res.status(500).json({ error: 'Erro ao buscar imóveis' });
-    }
-  }
+ 
   
   return {
     getImovel,
     postImovel,
     getImovelById,
     putImovel,
-    deleteImovel,
-    getImovelPorEstado,
-    getImoveisPorCidade
+    deleteImovel
   };
 }
 
