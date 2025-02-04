@@ -3,7 +3,7 @@ const {Estado} = require('../model/Estado');
 const {Tipo} = require('../model/Tipo');
 const {Photo} = require('../model/Photo');
 const {Cidade} = require('../model/Cidade');
-
+//
 async function listarImovel(filtros = {}) {
   return await Imovel.findAll({
     where: filtros,
