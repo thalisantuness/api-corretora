@@ -16,6 +16,24 @@ async function listarImovel(filtros = {}) {
   });
 }
 
+async function buscarImovelPorId(id) {
+  const imovel = await Imovel.findByPk(id, {
+    include: [
+      { model: Estado, as: 'estado', attributes: ['estado_id', 'nome'] },
+      { model: Cidade, as: 'cidade', attributes: ['cidade_id', 'nome'] },
+      { model: Tipo, as: 'tipo', attributes: ['tipo_id', 'nome'] },
+      { model: Photo, as: 'photo', attributes: ['photo_id', 'imageData'] }
+    ],
+  });
+
+  if (!imovel) {
+    throw new Error('Imóvel não encontrado');
+  }
+
+  return imovel;
+}
+
+
 async function criarImovel(dadosImovel) {
   const {
     nome,
@@ -44,16 +62,6 @@ async function criarImovel(dadosImovel) {
     estado_id,
     imageData, 
   });
-
-  return imovel;
-}
-
-async function buscarImovelPorId(id) {
-  const imovel = await Imovel.findByPk(id);
-
-  if (!imovel) {
-    throw new Error('Imóvel não encontrado');
-  }
 
   return imovel;
 }
