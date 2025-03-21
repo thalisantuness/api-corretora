@@ -48,6 +48,8 @@ router.delete('/tipos/:id', tipoController.deleteTipo);
 
 router.get('/photo', photoController.getPhoto);  
 router.post('/photo', photoController.postPhoto); 
+router.delete('/photo/:id', photoController.deletePhoto);
+
 
 router.use(authMiddleware);
 

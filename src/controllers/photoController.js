@@ -72,14 +72,31 @@ function PhotoController() {
       res.status(500).json({ error: 'Erro ao cadastrar imóvel' });
     }
   }
+
+  async function deletePhoto(req, res) {
+    try {
+      const { id } = req.params; // ID da foto
+      const { imovel_id } = req.body; // ID do imóvel vindo do body
   
+      if (!imovel_id) {
+        return res.status(400).json({ error: "O ID do imóvel é obrigatório." });
+      }
+  
+      const resultado = await photoRepository.deletarPhoto(id, imovel_id);
+  
+      res.json(resultado);
+    } catch (error) {
+      console.error('Erro ao deletar foto:', error);
+      res.status(500).json({ error: error.message || 'Erro ao excluir a foto.' });
+    }
+  }
 
   
 
   return {
     getPhoto,
     postPhoto,
-  
+    deletePhoto,
   };
 }
 
