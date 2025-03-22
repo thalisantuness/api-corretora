@@ -6,27 +6,29 @@ async function listarUsuarios() {
 }
 
 async function criarUsuario(dadosUsuario) {
-  const { nome, email, senha, imageData } = dadosUsuario;
+    const { nome, email, senha } = dadosUsuario;
 
-  if (!senha) {
-    throw new Error('Senha é obrigatória');
-  }
+    if (!senha) {
+        throw new Error('Senha é obrigatória');
+    }
 
-  const usuarioExistente = await Usuario.findOne({ where: { email } });
-  if (usuarioExistente) {
-    throw new Error('Usuário com este email já existe');
-  }
+    const usuarioExistente = await Usuario.findOne({ where: { email } });
+    if (usuarioExistente) {
+        throw new Error('Usuário com este email já existe');
+    }
 
-  const senhaHash = await bcrypt.hash(senha, 10);
+    const senhaHash = await bcrypt.hash(senha, 10);
 
-  const usuario = await Usuario.create({
-    nome,
-    email,
-    senha: senhaHash,
-    pontos: 0
-  });
+    const usuarioNormal = await Usuario.create({
+        nome,
+        email,
+        senha: senhaHash,
+        pontos: 0
+    });
 
-  return usuario;
+    console.log(`Usuário ${nome} criado com sucesso`);
+
+    return usuarioNormal;
 }
 
 async function buscarUsuario(email) {
