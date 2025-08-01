@@ -41,6 +41,14 @@ const Imovel = sequelize.define(
       type: Sequelize.INTEGER,
       allowNull: false,
     },
+    valor_iptu: {
+      type: Sequelize.DOUBLE,
+      allowNull: false,
+    },
+    tipo_transacao: {
+      type: Sequelize.ENUM("Aluguel", "Venda"),
+      allowNull: false,
+    },
     tipo_id: {
       type: Sequelize.INTEGER,
       allowNull: false,
